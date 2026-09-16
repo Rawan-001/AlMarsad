@@ -8,12 +8,14 @@ import { PaperRow } from "./PaperRow";
 
 export function PaperList({
   locale,
+  title,
   initialItems,
   total,
   pageSize,
   filters,
 }: {
   locale: Locale;
+  title?: string;
   initialItems: PaperListItem[];
   total: number;
   pageSize: number;
@@ -34,7 +36,8 @@ export function PaperList({
   }
 
   return (
-    <div className="rounded-lg border bg-surface px-4">
+    <div className="rounded-lg border bg-surface p-4">
+      {title && <h2 className="text-sm font-semibold text-text-primary mb-3">{title}</h2>}
       {items.map((paper) => (
         <PaperRow key={paper.paperId} locale={locale} paper={paper} />
       ))}

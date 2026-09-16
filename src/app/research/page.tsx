@@ -4,16 +4,15 @@ import {
   getBranchOptions,
   getDocumentTypeOptions,
   getPapersList,
-  getTopCited,
 } from "@/lib/queries";
 import { branchLabel, docTypeLabel, domainLabel, formatNumber, t } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale-server";
-import { PaperRow } from "@/components/PaperRow";
 import { PaperList } from "@/components/PaperList";
 
 export const dynamic = "force-dynamic";
 
 const PAGE_SIZE = 20;
+const TOP_CITED_PAGE_SIZE = 5;
 
 type SearchParams = {
   q?: string;
@@ -38,9 +37,9 @@ export default async function ResearchPage({ searchParams }: { searchParams: Pro
     sort: sort as "recent" | "cited",
   };
 
-  const [{ items, total }, topCited, branchOptions, domainOptions, docTypeOptions] = await Promise.all([
+  const [{ items, total }, { items: topCitedItems }, branchOptions, domainOptions, docTypeOptions] = await Promise.all([
     getPapersList({ ...filters, page: 1, pageSize: PAGE_SIZE }),
-    getTopCited(5),
+    getPapersList({ sort: "cited", page: 1, pageSize: TOP_CITED_PAGE_SIZE }),
     getBranchOptions(),
     getApplicationDomainOptions(),
     getDocumentTypeOptions(),
@@ -127,17 +126,29 @@ export default async function ResearchPage({ searchParams }: { searchParams: Pro
       </form>
 
       {!hasFilters && (
-        <div className="rounded-lg border bg-surface p-4">
-          <h2 className="text-sm font-semibold text-text-primary mb-3">{t(locale, "topCitedTitle")}</h2>
-          <div className="flex flex-col">
-            {topCited.map((paper) => (
-              <PaperRow key={paper.paperId} locale={locale} paper={paper} />
-            ))}
+        <>
+          <PaperList
+            locale={locale}
+            title={t(locale, "topCitedTitle")}
+            initialItems={topCitedItems}
+            total={total}
+            pageSize={TOP_CITED_PAGE_SIZE}
+            filters={{ sort: "cited" }}
+          />
+          <div className="flex items-center gap-3" role="separator">
+            <span className="flex-1 border-t-2" style={{ borderColor: "var(--gridline)" }} />
           </div>
-        </div>
+        </>
       )}
 
-      <PaperList locale={locale} initialItems={items} total={total} pageSize={PAGE_SIZE} filters={filters} />
+      <PaperList
+        locale={locale}
+        title={hasFilters ? undefined : t(locale, "allPapersTitle")}
+        initialItems={items}
+        total={total}
+        pageSize={PAGE_SIZE}
+        filters={filters}
+      />
     </div>
   );
 }

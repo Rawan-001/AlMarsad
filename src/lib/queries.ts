@@ -308,47 +308,6 @@ export async function getPapersList(
   };
 }
 
-export const getTopCited = unstable_cache(
-  async (limit = 5): Promise<PaperListItem[]> => {
-    const rows = await query<{
-      paper_id: number;
-      title: string;
-      year: number | null;
-      source_title: string | null;
-      citations_wos: number | null;
-      doi: string | null;
-      document_type: string | null;
-      mega_consortium: boolean;
-      branches: string[] | null;
-    }>(
-      `SELECT p.paper_id, p.title, p.year, p.source_title, p.citations_wos, p.doi, p.document_type, p.mega_consortium,
-         ARRAY(
-           SELECT b.name_en FROM paper_branch pb
-           JOIN ai_branch b ON b.branch_id = pb.branch_id
-           WHERE pb.paper_id = p.paper_id
-         ) AS branches
-       FROM paper p
-       WHERE p.include_in_display AND p.citations_wos IS NOT NULL
-       ORDER BY p.citations_wos DESC, p.paper_id DESC
-       LIMIT $1`,
-      [limit]
-    );
-    return rows.map((r) => ({
-      paperId: r.paper_id,
-      title: r.title,
-      year: r.year,
-      sourceTitle: r.source_title,
-      citations: r.citations_wos,
-      doi: r.doi,
-      documentType: r.document_type,
-      isMegaConsortium: r.mega_consortium,
-      branches: r.branches ?? [],
-    }));
-  },
-  ["top-cited"],
-  { revalidate: HOUR }
-);
-
 export type PaperDetail = PaperListItem & {
   applicationDomain: string | null;
   abstract: string | null;

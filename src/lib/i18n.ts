@@ -15,8 +15,7 @@ const ar = {
   dashboardTitle: "مؤشرات الذكاء الاصطناعي في جامعة الباحة",
   dashboardSubtitle: "نظرة عامة على الإنتاج البحثي في مجالات الذكاء الاصطناعي، مستخرجة من Web of Science.",
   pillarsTitle: "أقسام المرصد",
-  homeSubtitle:
-    "منصة لرصد وتوثيق الإنتاج العلمي والابتكاري في مجالات الذكاء الاصطناعي بجامعة الباحة — تشمل الأبحاث، المشاريع، الأنشطة، الابتكار، الجوائز، الشراكات، والمزيد.",
+  homeSubtitle: "منصة لرصد وتوثيق الإنتاج العلمي والابتكاري في مجالات الذكاء الاصطناعي بجامعة الباحة.",
   pillarResearch: "البحث والإنتاج العلمي",
   pillarResearchDesc: "الأبحاث المنشورة في مجالات الذكاء الاصطناعي بجامعة الباحة، مستخرجة من Web of Science.",
   pillarProjects: "المشاريع البحثية",
@@ -120,8 +119,7 @@ const en: Record<keyof typeof ar, string> = {
   dashboardTitle: "AI Indicators at Al Baha University",
   dashboardSubtitle: "Overview of AI-related research output, extracted from Web of Science.",
   pillarsTitle: "Observatory Sections",
-  homeSubtitle:
-    "A platform to observe and document scientific and innovative output in AI at Al Baha University — covering research, projects, activities, innovation, awards, partnerships, and more.",
+  homeSubtitle: "A platform to observe and document scientific and innovative output in AI at Al Baha University.",
   pillarResearch: "Research & Scientific Output",
   pillarResearchDesc: "Published AI-related research at Al Baha University, extracted from Web of Science.",
   pillarProjects: "Research Projects",

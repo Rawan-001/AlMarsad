@@ -1,6 +1,6 @@
 import {
   CalendarDays,
-  FlaskConical,
+  FileText,
   FolderKanban,
   GraduationCap,
   Globe,
@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 const ICONS: Record<string, LucideIcon> = {
-  research: FlaskConical,
+  research: FileText,
   projects: FolderKanban,
   activities: CalendarDays,
   participation: Globe,

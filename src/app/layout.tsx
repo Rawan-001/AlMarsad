@@ -32,8 +32,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <header className="border-b bg-surface">
           <div className="mx-auto max-w-6xl px-4 py-4 flex flex-wrap items-center justify-between gap-3">
-            <Link href="/" className="flex items-center gap-3 min-w-0">
-              <span className="flex items-center gap-2 rounded-md bg-white px-2 py-1.5 shrink-0">
+            <Link href="/" className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+              <span className="flex items-center gap-2 rounded-md bg-white px-2 py-1.5 shrink-0 self-start">
                 <Image
                   src="/albaha-university-logo.png"
                   alt="Al-Baha University"

@@ -209,6 +209,8 @@ export const getDocumentTypeOptions = unstable_cache(
   { revalidate: DAY }
 );
 
+export type DataSource = "wos" | "scopus" | "both";
+
 export type PaperListItem = {
   paperId: number;
   title: string;
@@ -219,7 +221,13 @@ export type PaperListItem = {
   documentType: string | null;
   isMegaConsortium: boolean;
   branches: string[];
+  dataSource: DataSource;
 };
+
+function toDataSource(hasWos: boolean, hasScopus: boolean): DataSource {
+  if (hasWos && hasScopus) return "both";
+  return hasWos ? "wos" : "scopus";
+}
 
 export type PaperFilters = {
   q?: string;
@@ -283,8 +291,11 @@ export async function getPapersList(
       document_type: string | null;
       mega_consortium: boolean;
       branches: string[] | null;
+      has_wos: boolean;
+      has_scopus: boolean;
     }>(
       `SELECT p.paper_id, p.title, p.year, p.source_title, p.citations_wos, p.doi, p.document_type, p.mega_consortium,
+         (p.wos_uid IS NOT NULL) AS has_wos, (p.scopus_eid IS NOT NULL) AS has_scopus,
          ARRAY(
            SELECT b.name_en FROM paper_branch pb
            JOIN ai_branch b ON b.branch_id = pb.branch_id
@@ -309,6 +320,7 @@ export async function getPapersList(
       documentType: r.document_type,
       isMegaConsortium: r.mega_consortium,
       branches: r.branches ?? [],
+      dataSource: toDataSource(r.has_wos, r.has_scopus),
     })),
     total: Number(totalRow?.count ?? 0),
   };
@@ -333,9 +345,11 @@ export const getPaperDetail = unstable_cache(
       mega_consortium: boolean;
       application_domain: string | null;
       abstract: string | null;
+      has_wos: boolean;
+      has_scopus: boolean;
     }>(
       `SELECT paper_id, title, year, source_title, citations_wos, doi, document_type, mega_consortium,
-              application_domain, abstract
+              application_domain, abstract, (wos_uid IS NOT NULL) AS has_wos, (scopus_eid IS NOT NULL) AS has_scopus
        FROM paper WHERE paper_id = $1 AND include_in_display`,
       [paperId]
     );
@@ -366,6 +380,7 @@ export const getPaperDetail = unstable_cache(
       documentType: row.document_type,
       isMegaConsortium: row.mega_consortium,
       branches: branchRows.map((b) => b.name_en),
+      dataSource: toDataSource(row.has_wos, row.has_scopus),
       applicationDomain: row.application_domain,
       abstract: row.abstract,
       researchers: researcherRows.map((r) => ({ nameKey: r.name_key, displayName: r.name_as_written })),

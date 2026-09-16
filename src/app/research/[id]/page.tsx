@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPaperDetail } from "@/lib/queries";
-import { branchLabel, domainLabel, formatNumber, t } from "@/lib/i18n";
+import { branchLabel, domainLabel, formatNumber, sourceLabel, t } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale-server";
 import { Badge } from "@/components/Badge";
 
@@ -34,6 +34,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
 
       <div className="rounded-lg border bg-surface p-6 flex flex-col gap-4">
         <div className="flex flex-wrap gap-2">
+          <Badge>{sourceLabel(locale, paper.dataSource)}</Badge>
           {paper.branches.map((b) => (
             <Badge key={b}>{branchLabel(locale, b)}</Badge>
           ))}

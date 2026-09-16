@@ -82,6 +82,9 @@ const ar = {
   tableCitations: "الاستشهادات",
   tableDoi: "DOI",
   viewDoi: "عرض DOI",
+  sourceWos: "Web of Science",
+  sourceScopus: "Scopus",
+  sourceBoth: "WoS + Scopus",
   noResults: "لا توجد نتائج مطابقة",
   loadMore: "تحميل المزيد",
   backToResearch: "→ العودة إلى الإنتاج البحثي",
@@ -186,6 +189,9 @@ const en: Record<keyof typeof ar, string> = {
   tableCitations: "Citations",
   tableDoi: "DOI",
   viewDoi: "View DOI",
+  sourceWos: "Web of Science",
+  sourceScopus: "Scopus",
+  sourceBoth: "WoS + Scopus",
   noResults: "No matching results",
   loadMore: "Load More",
   backToResearch: "→ Back to Research Output",
@@ -281,6 +287,11 @@ export function docTypeLabel(locale: Locale, docType: string): string {
 
 export function collegeGroupLabel(locale: Locale, group: string): string {
   return locale === "ar" ? COLLEGE_GROUP_AR[group] ?? group : group;
+}
+
+export function sourceLabel(locale: Locale, source: "wos" | "scopus" | "both"): string {
+  if (source === "both") return t(locale, "sourceBoth");
+  return source === "wos" ? t(locale, "sourceWos") : t(locale, "sourceScopus");
 }
 
 export function formatNumber(locale: Locale, n: number): string {

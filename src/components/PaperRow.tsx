@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { branchLabel, formatNumber, t, type Locale } from "@/lib/i18n";
+import { branchLabel, formatNumber, sourceLabel, t, type Locale } from "@/lib/i18n";
 import type { PaperListItem } from "@/lib/queries";
 import { Badge } from "./Badge";
 
@@ -32,6 +32,7 @@ export function PaperRow({ locale, paper }: { locale: Locale; paper: PaperListIt
         </span>
       </div>
       <div className="flex flex-wrap gap-1.5 mt-2">
+        <Badge>{sourceLabel(locale, paper.dataSource)}</Badge>
         {paper.branches.map((b) => (
           <Badge key={b}>{branchLabel(locale, b)}</Badge>
         ))}

@@ -30,6 +30,7 @@
 body {
   background: var(--page);
   color: var(--text-primary);
+  overflow-x: hidden;
 }
 
 * {

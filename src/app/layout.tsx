@@ -31,8 +31,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html lang={locale} dir={dir} className={`${cairo.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <header className="border-b bg-surface">
-          <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between gap-4">
-            <Link href="/" className="flex items-center gap-3">
+          <div className="mx-auto max-w-6xl px-4 py-4 flex flex-wrap items-center justify-between gap-3">
+            <Link href="/" className="flex items-center gap-3 min-w-0">
               <span className="flex items-center gap-2 rounded-md bg-white px-2 py-1.5 shrink-0">
                 <Image
                   src="/albaha-university-logo.png"
@@ -52,13 +52,13 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                   priority
                 />
               </span>
-              <span className="font-bold text-lg text-text-primary">
+              <span className="font-bold text-lg text-text-primary min-w-0">
                 {t(locale, "siteTitle")}
                 <span className="block text-xs font-normal text-text-muted">{t(locale, "siteSubtitle")}</span>
               </span>
             </Link>
-            <div className="flex items-center gap-1">
-              <nav className="flex gap-1">
+            <div className="flex items-center gap-1 flex-wrap">
+              <nav className="flex gap-1 flex-wrap">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}

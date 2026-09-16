@@ -30,6 +30,7 @@ export const getDashboardStats = unstable_cache(
     const [row, inst, authorsRow] = await Promise.all([
       queryOne<{
         total_papers: string;
+        wos_papers: string;
         total_citations: string | null;
         since_2020: string;
         open_access: string;
@@ -39,6 +40,7 @@ export const getDashboardStats = unstable_cache(
       }>(`
         SELECT
           COUNT(*) AS total_papers,
+          COUNT(*) FILTER (WHERE wos_uid IS NOT NULL) AS wos_papers,
           SUM(citations_wos) AS total_citations,
           COUNT(*) FILTER (WHERE year >= 2020) AS since_2020,
           COUNT(*) FILTER (WHERE open_access IS NOT NULL) AS open_access,
@@ -57,6 +59,7 @@ export const getDashboardStats = unstable_cache(
     ]);
 
     const totalPapers = Number(row?.total_papers ?? 0);
+    const wosPapers = Number(row?.wos_papers ?? 0);
     const totalCitations = Number(row?.total_citations ?? 0);
     const institutionTotal = inst?.wos_total ?? 0;
     const openAccessCount = Number(row?.open_access ?? 0);
@@ -64,7 +67,10 @@ export const getDashboardStats = unstable_cache(
     return {
       totalPapers,
       institutionTotal,
-      sharePct: institutionTotal ? (totalPapers / institutionTotal) * 100 : 0,
+      // Share is WoS-specific: institutionTotal (5,271) is a WoS institutional
+      // total, so the numerator must only count WoS-sourced papers, not the
+      // full merged (WoS + Scopus) total, or the ratio would be meaningless.
+      sharePct: institutionTotal ? (wosPapers / institutionTotal) * 100 : 0,
       totalCitations,
       meanCitations: totalPapers ? totalCitations / totalPapers : 0,
       papersSince2020: Number(row?.since_2020 ?? 0),

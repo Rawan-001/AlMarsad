@@ -259,7 +259,9 @@ export async function getPapersList(
 
   const where = `WHERE ${conditions.join(" AND ")}`;
   const orderBy =
-    filters.sort === "cited" ? "p.citations_wos DESC NULLS LAST, p.year DESC" : "p.year DESC NULLS LAST, p.citations_wos DESC";
+    filters.sort === "cited"
+      ? "p.citations_wos DESC NULLS LAST, p.year DESC, p.paper_id DESC"
+      : "p.year DESC NULLS LAST, p.citations_wos DESC, p.paper_id DESC";
   const offset = (filters.page - 1) * filters.pageSize;
   const listParams = [...params, filters.pageSize, offset];
 
@@ -327,7 +329,7 @@ export const getTopCited = unstable_cache(
          ) AS branches
        FROM paper p
        WHERE p.include_in_display AND p.citations_wos IS NOT NULL
-       ORDER BY p.citations_wos DESC
+       ORDER BY p.citations_wos DESC, p.paper_id DESC
        LIMIT $1`,
       [limit]
     );
@@ -450,7 +452,7 @@ export async function getResearcherList(
      FROM researcher_paper rp
      ${where}
      GROUP BY name_key
-     ORDER BY paper_count DESC, display_name
+     ORDER BY paper_count DESC, display_name, name_key
      LIMIT $${listParams.length - 1} OFFSET $${listParams.length}`,
       listParams
     ),

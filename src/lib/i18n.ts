@@ -1,6 +1,6 @@
 export type Locale = "ar" | "en";
 export const LOCALE_COOKIE = "marsad_lang";
-export const defaultLocale: Locale = "ar";
+export const defaultLocale: Locale = "en";
 
 const ar = {
   siteTitle: "المرصد الجامعي للإنتاج العلمي والابتكاري في الذكاء الاصطناعي",

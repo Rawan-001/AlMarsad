@@ -1,6 +1,7 @@
 import { getBranchCounts, getCollegeGroupCounts, getDashboardStats, getYearCounts } from "@/lib/queries";
 import { StatTile } from "@/components/StatTile";
 import { BarChart, HorizontalBarChart } from "@/components/BarChart";
+import { ObservatoryPillars } from "@/components/ObservatoryPillars";
 import { branchLabel, collegeGroupLabel, formatDecimal, formatNumber, t } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale-server";
 
@@ -23,6 +24,8 @@ export default async function DashboardPage() {
         <h1 className="text-xl font-bold text-text-primary">{t(locale, "dashboardTitle")}</h1>
         <p className="text-sm text-text-secondary mt-1">{t(locale, "dashboardSubtitle")}</p>
       </div>
+
+      <ObservatoryPillars locale={locale} researchCount={stats.totalPapers} />
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <StatTile

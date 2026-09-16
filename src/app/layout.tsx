@@ -12,10 +12,13 @@ const cairo = Cairo({
   subsets: ["arabic", "latin"],
 });
 
-export const metadata: Metadata = {
-  title: "مرصد الذكاء الاصطناعي - جامعة الباحة",
-  description: "مرصد رصد وتوثيق وتحليل الإنتاج البحثي في مجالات الذكاء الاصطناعي بجامعة الباحة",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: `${t(locale, "siteTitle")} – ${t(locale, "siteSubtitle")}`,
+    description: t(locale, "dashboardSubtitle"),
+  };
+}
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = await getLocale();

@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   const navLinks = [
-    { href: "/", label: t(locale, "navDashboard") },
+    { href: "/dashboard", label: t(locale, "navDashboard") },
     { href: "/research", label: t(locale, "navResearch") },
     { href: "/researchers", label: t(locale, "navResearchers") },
   ];

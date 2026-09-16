@@ -478,12 +478,3 @@ export async function getResearcherApproxCount(): Promise<number> {
   `);
   return Number(row?.count ?? 0);
 }
-
-export async function getDepartmentCounts(topN = 15): Promise<{ departmentText: string; paperCount: number }[]> {
-  const rows = await query<{ department_text: string; paper_count: number }>(
-    `SELECT department_text, paper_count FROM department_summary
-     ORDER BY paper_count DESC LIMIT $1`,
-    [topN]
-  );
-  return rows.map((d) => ({ departmentText: d.department_text, paperCount: Number(d.paper_count) }));
-}

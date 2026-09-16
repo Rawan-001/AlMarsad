@@ -67,15 +67,9 @@ const ar = {
 
   researchersTitle: "الباحثون",
   researchersApproxCount: "أكثر من {n} اسم مؤلف من جامعة الباحة",
-  allResearchersTitle: "جميع الباحثين",
   searchByName: "بحث بالاسم",
   searchByNamePlaceholder: "اكتب اسم الباحث...",
   searchSubmit: "بحث",
-  colName: "الاسم",
-  colPapers: "عدد الأبحاث",
-  colBranches: "الفروع",
-  colDepartment: "القسم",
-  departmentsTitle: "توزيع الأبحاث على الأقسام",
   researchersDisclaimer:
     "الأسماء والأقسام أولية كما وردت في البحث، ولم تُوحَّد بعد مع بيانات الجامعة أو ORCID. لا تُعرض بيانات شخصية غير الاسم.",
   backToResearchers: "→ العودة إلى الباحثين",
@@ -153,15 +147,9 @@ const en: Record<keyof typeof ar, string> = {
 
   researchersTitle: "Researchers",
   researchersApproxCount: "More than {n} author names from Al Baha University",
-  allResearchersTitle: "All Researchers",
   searchByName: "Search by name",
   searchByNamePlaceholder: "Type a researcher's name...",
   searchSubmit: "Search",
-  colName: "Name",
-  colPapers: "Papers",
-  colBranches: "Branches",
-  colDepartment: "Department",
-  departmentsTitle: "Papers by Department",
   researchersDisclaimer:
     "Names and departments are preliminary, as written in the paper, and have not yet been unified with university records or ORCID. No personal data beyond the name is shown.",
   backToResearchers: "→ Back to Researchers",
